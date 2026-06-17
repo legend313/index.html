@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ultimate Cute Game</title>
+<meta charset="UTF-8">
+<title>Neon Love Game</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(-45deg, #ff4d6d, #ffb3c6, #ff69b4, #ff85a2);
-  background-size: 400% 400%;
+  font-family: Arial;
+  background: linear-gradient(270deg, #ff4da6, #7a00ff, #00e5ff);
+  background-size: 600% 600%;
   animation: bg 10s ease infinite;
 }
 
@@ -22,144 +21,144 @@ body {
 }
 
 h1 {
-  position: absolute;
-  width: 100%;
   text-align: center;
-  top: 20px;
   color: white;
+  margin-top: 30px;
   text-shadow: 0 0 15px #fff;
 }
 
 #score {
-  position: absolute;
-  top: 70px;
-  width: 100%;
   text-align: center;
   color: white;
   font-size: 20px;
 }
 
 button {
-  position: absolute;
-  padding: 15px 25px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   cursor: pointer;
-  font-size: 16px;
-  box-shadow: 0 0 15px white;
-}
-
-#no {
-  background: black;
-  color: white;
 }
 
 #yes {
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 40px;
+  display: block;
+  margin: 20px auto;
   background: white;
   color: hotpink;
   font-size: 18px;
 }
 
-canvas {
+#no {
   position: absolute;
-  top: 0;
-  left: 0;
+  background: black;
+  color: white;
+}
+
+.heart {
+  position: absolute;
+  font-size: 24px;
+  animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+  from {transform: translateY(-50px);}
+  to {transform: translateY(110vh);}
+}
+
+.cat {
+  position: absolute;
+  font-size: 35px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Catch the Hearts 💖</h1>
+<h1>Catch Hearts 💖 & Enjoy Music 🎵</h1>
 <div id="score">Score: 0</div>
 
+<button id="yes">START 💖</button>
 <button id="no">NO ❌</button>
-<button id="yes">YES 💖</button>
-
-<canvas id="game"></canvas>
 
 <script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+// ---------------- MUSIC (Web Audio API) ----------------
+let audioCtx;
+function startMusic() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+  const notes = [261, 329, 392, 523]; // simple melody
+  let i = 0;
 
-let hearts = [];
+  setInterval(() => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.frequency.value = notes[i % notes.length];
+    osc.type = "sine";
+
+    gain.gain.value = 0.05;
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.2);
+
+    i++;
+  }, 250);
+}
+
+// ---------------- GAME ----------------
 let score = 0;
+document.getElementById("score");
 
-class Heart {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = -20;
-    this.size = 20 + Math.random() * 20;
-    this.speed = 2 + Math.random() * 3;
-    this.char = Math.random() > 0.5 ? "💖" : "🐱";
-  }
-  update() {
-    this.y += this.speed;
-  }
-  draw() {
-    ctx.font = this.size + "px Arial";
-    ctx.fillText(this.char, this.x, this.y);
-  }
-}
+document.getElementById("yes").onclick = () => {
+  startMusic();
+  alert("Music started 💖 Catch hearts!");
+};
 
-function spawn() {
-  hearts.push(new Heart());
-}
-
-function loop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  hearts.forEach((h, i) => {
-    h.update();
-    h.draw();
-
-    if (h.y > canvas.height) hearts.splice(i, 1);
-  });
-
-  requestAnimationFrame(loop);
-}
-
-setInterval(spawn, 250);
-loop();
-
-// click to catch
-canvas.addEventListener("click", (e) => {
-  hearts.forEach((h, i) => {
-    const dx = e.clientX - h.x;
-    const dy = e.clientY - h.y;
-    if (Math.sqrt(dx*dx + dy*dy) < 30) {
-      hearts.splice(i, 1);
-      score++;
-      document.getElementById("score").innerText = "Score: " + score;
-
-      if (score === 20) {
-        alert("You win 💖 You caught all the love!");
-      }
-    }
-  });
-});
-
-// runaway NO button
+// runaway button
 const noBtn = document.getElementById("no");
 
 function moveNo() {
   noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
   noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
 }
-
 noBtn.addEventListener("mouseover", moveNo);
-noBtn.addEventListener("click", moveNo);
 
-// YES button
-document.getElementById("yes").onclick = () => {
-  alert("You chose YES 💖");
-};
+// hearts
+function spawnHeart() {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "💖";
+
+  h.style.left = Math.random() * window.innerWidth + "px";
+  h.style.fontSize = (20 + Math.random() * 20) + "px";
+
+  document.body.appendChild(h);
+
+  h.onclick = () => {
+    score++;
+    document.getElementById("score").innerText = "Score: " + score;
+    h.remove();
+  };
+
+  setTimeout(() => h.remove(), 4000);
+}
+setInterval(spawnHeart, 300);
+
+// cats
+function spawnCat() {
+  const c = document.createElement("div");
+  c.className = "cat";
+  c.innerHTML = "🐱";
+  c.style.left = Math.random() * window.innerWidth + "px";
+  c.style.top = Math.random() * window.innerHeight + "px";
+
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 2000);
+}
+setInterval(spawnCat, 1200);
 </script>
 
 </body>
