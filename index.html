@@ -17,7 +17,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            /* Deep emerald/teal theme matching Madrigal's vibe */
             background: linear-gradient(135deg, #0d1b18, #162e2a, #0a1412);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #e2f0ed;
@@ -25,7 +24,6 @@
             text-align: center;
         }
 
-        /* Ambient floating shapes */
         .ambient-bg {
             position: absolute;
             width: 100%;
@@ -98,9 +96,9 @@
             transform: scale(1.05);
         }
 
-        /* Muted, dark burgundy "No" button so it doesn't look overly bright red */
+        /* CHANGED: Soft Slate Grey/Teal Button instead of Crimson */
         #noBtn {
-            background-color: #722f37;
+            background-color: #3a4d4a;
             color: rgba(255, 255, 255, 0.9);
             position: absolute;
         }
@@ -146,7 +144,6 @@
         const question = document.getElementById('question');
         const btnGroup = document.querySelector('.btn-group');
 
-        // Makes the No button dodge the cursor
         noBtn.addEventListener('mouseover', () => {
             const groupRect = btnGroup.getBoundingClientRect();
             const noRect = noBtn.getBoundingClientRect();
@@ -161,9 +158,8 @@
             noBtn.style.transform = `translateY(${randomY}px)`;
         });
 
-        // When they finally click Yes
         yesBtn.addEventListener('click', () => {
-            question.innerHTML = "I knew it! ❤️";
+            question.innerHTML = "I knew it! 💚";
             noBtn.style.display = 'none';
             yesBtn.style.transform = 'scale(1.2)';
             yesBtn.disabled = true;
