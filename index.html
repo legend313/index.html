@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Neon Love Game</title>
+<title>Neon Love 💖</title>
 
 <style>
 body {
@@ -15,14 +15,12 @@ body {
   animation: bg 10s ease infinite;
 }
 
-/* background animation */
 @keyframes bg {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* title */
 h1 {
   text-align: center;
   color: white;
@@ -30,14 +28,13 @@ h1 {
   text-shadow: 0 0 15px white;
 }
 
-/* score */
-#score {
+#msg {
   text-align: center;
   color: white;
   font-size: 20px;
+  margin-top: 10px;
 }
 
-/* button */
 button {
   padding: 15px 25px;
   border: none;
@@ -51,7 +48,6 @@ button {
   margin: 30px auto;
   background: white;
   color: hotpink;
-  box-shadow: 0 0 20px white;
 }
 
 #no {
@@ -60,7 +56,6 @@ button {
   color: white;
 }
 
-/* hearts */
 .heart {
   position: absolute;
   font-size: 24px;
@@ -71,47 +66,56 @@ button {
   from { transform: translateY(-50px); }
   to { transform: translateY(110vh); }
 }
+
+.cat {
+  position: absolute;
+  font-size: 40px;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Neon Love Game 💖</h1>
-<div id="score">Score: 0</div>
+<h1>Do you love me? 💖</h1>
+<div id="msg">YES or NO 😳</div>
 
 <button id="yes">YES 💕</button>
 <button id="no">NO ❌</button>
 
 <script>
-let score = 0;
-
 const noBtn = document.getElementById("no");
+const msg = document.getElementById("msg");
 
-function moveNo() {
+noBtn.addEventListener("mouseover", () => {
   noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
   noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
-}
-
-noBtn.addEventListener("mouseover", moveNo);
+});
 
 document.getElementById("yes").onclick = () => {
-  alert("AWWW BABEEE I LOVE YOU TO!!! 💖🐱✨");
+  msg.innerHTML = "AWWW BABEEE I LOVE YOU TO!!! 💖🐱✨";
 };
 
-/* hearts */
-function spawnHeart() {
+// hearts
+setInterval(() => {
   const h = document.createElement("div");
   h.className = "heart";
   h.innerHTML = "💖";
-
   h.style.left = Math.random() * window.innerWidth + "px";
-
   document.body.appendChild(h);
-
   setTimeout(() => h.remove(), 4000);
-}
+}, 200);
 
-setInterval(spawnHeart, 200);
+// cats
+setInterval(() => {
+  const c = document.createElement("div");
+  c.className = "cat";
+  c.innerHTML = "🐱";
+  c.style.left = Math.random() * window.innerWidth + "px";
+  c.style.top = Math.random() * window.innerHeight + "px";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 2000);
+}, 1200);
+
 </script>
 
 </body>
