@@ -48,6 +48,7 @@ button {
   margin: 30px auto;
   background: white;
   color: hotpink;
+  box-shadow: 0 0 20px white;
 }
 
 #no {
@@ -86,11 +87,13 @@ button {
 const noBtn = document.getElementById("no");
 const msg = document.getElementById("msg");
 
+// NO button runs away
 noBtn.addEventListener("mouseover", () => {
   noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
   noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
 });
 
+// YES button
 document.getElementById("yes").onclick = () => {
   msg.innerHTML = "AWWW BABEEE I LOVE YOU TO!!! 💖🐱✨";
 };
