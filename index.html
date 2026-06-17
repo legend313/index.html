@@ -1,125 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Neon Love 💖</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial;
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #111a1e, #0e2925);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+            text-align: center;
+        }
 
-  background: linear-gradient(270deg, #ff4da6, #7a00ff, #00e5ff);
-  background-size: 600% 600%;
-  animation: bg 10s ease infinite;
-}
+        /* Ambient floating shapes */
+        .ambient-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-@keyframes bg {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+        .circle {
+            position: absolute;
+            background: rgba(46, 139, 117, 0.1);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
 
-h1 {
-  text-align: center;
-  color: white;
-  margin-top: 40px;
-  text-shadow: 0 0 15px white;
-}
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
 
-#msg {
-  text-align: center;
-  color: white;
-  font-size: 20px;
-  margin-top: 10px;
-}
+        .container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 450px;
+            width: 90%;
+        }
 
-button {
-  padding: 15px 25px;
-  border: none;
-  border-radius: 30px;
-  font-size: 18px;
-  cursor: pointer;
-}
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
 
-#yes {
-  display: block;
-  margin: 30px auto;
-  background: white;
-  color: hotpink;
-  box-shadow: 0 0 20px white;
-}
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+            align-items: center;
+        }
 
-#no {
-  position: absolute;
-  background: black;
-  color: white;
-}
+        button {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-.heart {
-  position: absolute;
-  font-size: 24px;
-  animation: fall 4s linear forwards;
-}
+        #yesBtn {
+            background-color: #2e8b75;
+            color: white;
+        }
 
-@keyframes fall {
-  from { transform: translateY(-50px); }
-  to { transform: translateY(110vh); }
-}
+        #yesBtn:hover {
+            background-color: #3ca38a;
+            transform: scale(1.05);
+        }
 
-.cat {
-  position: absolute;
-  font-size: 40px;
-}
-</style>
+        #noBtn {
+            background-color: #d9534f;
+            color: white;
+            position: absolute;
+        }
+
+        /* Audio element layout hidden layout overlay */
+        .audio-player {
+            margin-top: 2rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        .audio-player:hover {
+            opacity: 1;
+        }
+    </style>
 </head>
-
 <body>
 
-<h1>Do you love me? 💖</h1>
-<div id="msg">YES or NO 😳</div>
+    <div class="ambient-bg">
+        <div class="circle" style="width: 200px; height: 200px; top: 10%; left: 10%;"></div>
+        <div class="circle" style="width: 300px; height: 300px; bottom: 10%; right: 10%; animation-delay: -2s;"></div>
+    </div>
 
-<button id="yes">YES 💕</button>
-<button id="no">NO ❌</button>
+    <div class="container">
+        <h1 id="question">Do you love me?</h1>
+        
+        <div class="btn-group">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn" style="left: 240px;">No</button>
+        </div>
 
-<script>
-const noBtn = document.getElementById("no");
-const msg = document.getElementById("msg");
+        <div class="audio-player">
+            <audio id="bgMusic" controls loop>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p style="font-size: 0.8rem; margin-top: 5px; color: #8fa39f;">Click play to listen to Seni Dert Etmeler</p>
+        </div>
+    </div>
 
-// NO button runs away
-noBtn.addEventListener("mouseover", () => {
-  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-  noBtn.style.top = Math.random() * (window.innerHeight - 100) + "px";
-});
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById
 
-// YES button
-document.getElementById("yes").onclick = () => {
-  msg.innerHTML = "AWWW BABEEE I LOVE YOU TO!!! 💖🐱✨";
-};
-
-// hearts
-setInterval(() => {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "💖";
-  h.style.left = Math.random() * window.innerWidth + "px";
-  document.body.appendChild(h);
-  setTimeout(() => h.remove(), 4000);
-}, 200);
-
-// cats
-setInterval(() => {
-  const c = document.createElement("div");
-  c.className = "cat";
-  c.innerHTML = "🐱";
-  c.style.left = Math.random() * window.innerWidth + "px";
-  c.style.top = Math.random() * window.innerHeight + "px";
-  document.body.appendChild(c);
-  setTimeout(() => c.remove(), 2000);
-}, 1200);
-
-</script>
-
-</body>
-</html>
+      
