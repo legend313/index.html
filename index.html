@@ -1,144 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do You Love Me?</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #111a1e, #0e2925);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
-            overflow: hidden;
-            text-align: center;
-        }
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Changed from red-tints to deep emerald/teal theme */
+    background: linear-gradient(135deg, #0d1b18, #162e2a, #0a1412);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e2f0ed;
+    overflow: hidden;
+    text-align: center;
+}
 
-        /* Ambient floating shapes */
-        .ambient-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
+/* Ambient floating shapes matching the music video theme */
+.ambient-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
 
-        .circle {
-            position: absolute;
-            background: rgba(46, 139, 117, 0.1);
-            border-radius: 50%;
-            animation: float 8s infinite ease-in-out;
-        }
+.circle {
+    position: absolute;
+    background: rgba(52, 163, 137, 0.05);
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.1); }
-        }
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+}
 
-        .container {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 450px;
-            width: 90%;
-        }
+.container {
+    position: relative;
+    z-index: 2;
+    background: rgba(20, 40, 36, 0.4);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    max-width: 450px;
+    width: 90%;
+}
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.6);
+}
 
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            position: relative;
-            height: 50px;
-            align-items: center;
-        }
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    height: 50px;
+    align-items: center;
+}
 
-        button {
-            padding: 12px 35px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
+button {
+    padding: 12px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
-        #yesBtn {
-            background-color: #2e8b75;
-            color: white;
-        }
+#yesBtn {
+    background-color: #2b806b;
+    color: white;
+}
 
-        #yesBtn:hover {
-            background-color: #3ca38a;
-            transform: scale(1.05);
-        }
+#yesBtn:hover {
+    background-color: #36a388;
+    transform: scale(1.05);
+}
 
-        #noBtn {
-            background-color: #d9534f;
-            color: white;
-            position: absolute;
-        }
+/* Toned down the red to a muted, dark burgundy so it doesn't overpower */
+#noBtn {
+    background-color: #722f37;
+    color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+}
 
-        /* Audio element layout hidden layout overlay */
-        .audio-player {
-            margin-top: 2rem;
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
-        .audio-player:hover {
-            opacity: 1;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="ambient-bg">
-        <div class="circle" style="width: 200px; height: 200px; top: 10%; left: 10%;"></div>
-        <div class="circle" style="width: 300px; height: 300px; bottom: 10%; right: 10%; animation-delay: -2s;"></div>
-    </div>
-
-    <div class="container">
-        <h1 id="question">Do you love me?</h1>
-        
-        <div class="btn-group">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn" style="left: 240px;">No</button>
-        </div>
-
-        <div class="audio-player">
-            <audio id="bgMusic" controls loop>
-                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-            <p style="font-size: 0.8rem; margin-top: 5px; color: #8fa39f;">Click play to listen to Seni Dert Etmeler</p>
-        </div>
-    </div>
-
-    <script>
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById
-
-      
+.audio-player {
+    margin-top: 2.5rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+.audio-player:hover {
+    opacity: 0.9;
+}
