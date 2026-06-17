@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Question</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Do you love me? ❤️</h1>
+
+    <button onclick="answerYes()">Yes</button>
+    <button onclick="answerNo()">No</button>
+
+    <p id="result"></p>
+
+    <script>
+        function answerYes() {
+            document.getElementById("result").innerHTML =
+                "Aww, I love you too! ❤️";
+        }
+
+        function answerNo() {
+            document.getElementById("result").innerHTML =
+                "That's okay 😢";
+        }
+    </script>
+
+</body>
+</html>
